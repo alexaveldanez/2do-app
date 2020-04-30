@@ -1,0 +1,24 @@
+<section class="signup">
+  <h2>Create a new account</h2>
+  <h4>Manage all your things to do!</h4>
+  <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)">
+    <mat-form-field>
+      <input
+      type="email"
+      matInput
+      placeholder="Your email"
+      formControlName="email">
+      <mat-hint>Please enter your email</mat-hint>
+      <mat-error>Email is missing or invalid!</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+    <input
+    type="password"
+    matInput
+    placeholder="Your password"
+    formControlName="password">
+    <mat-hint>Please enter your password</mat-hint>
+    </mat-form-field>
+    <button mat-raised-button color='primary' type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+  </form>
+</section>
