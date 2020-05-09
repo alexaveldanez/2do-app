@@ -15,6 +15,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { AuthService } from './auth/auth.service';
 
 
 
@@ -37,7 +38,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     FlexLayoutModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
