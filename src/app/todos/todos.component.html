@@ -1,0 +1,16 @@
+<section class="todos">
+  <h1>My ToDos</h1>
+  <form class="todo-form" fxLayout="column" fxLayoutAlign="center center" [formGroup]="todosForm">
+    <mat-form-field>
+      <input matInput type="text" placeholder="Please enter a todo" formControlName="todo">
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onAddTodo(todosForm.value.todo)">Add</button>
+  </form>
+    <ul fxLayout="column" fxLayoutAlign="center center">
+      <mat-card class="todo-card" *ngFor="let todo of todos">{{ todo.text }}
+        <button mat-icon-button class="delete-button" color="warn" (click)="deleteTodo(todo)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button class="edit-button" color="primary"><mat-icon>edit</mat-icon></button>
+      </mat-card>
+    </ul>
+</section>
+

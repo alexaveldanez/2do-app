@@ -1,0 +1,20 @@
+h1 {
+  text-align: center;
+}
+
+mat-form-field {
+  width: 350px;
+}
+
+.todo-card {
+  width: 350px;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  float: right
+}
+
+.edit-button {
+  float: right;
+}

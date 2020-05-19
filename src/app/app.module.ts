@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 import { AppComponent } from './app.component';
-import { TodoComponent } from './todo/todo.component';
+import { TodosComponent } from './todos/todos.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { LoginComponent } from './auth/login/login.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,13 +16,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AuthService } from './auth/auth.service';
+import { TodoService } from './todos/todo.service';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoComponent,
+    TodosComponent,
     SignupComponent,
     LoginComponent,
     WelcomeComponent,
@@ -38,7 +39,7 @@ import { AuthService } from './auth/auth.service';
     FlexLayoutModule,
     FormsModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
