@@ -17,6 +17,7 @@ import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AuthService } from './auth/auth.service';
 import { TodoService } from './todos/todo.service';
+import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
 
 
 
@@ -28,7 +29,8 @@ import { TodoService } from './todos/todo.service';
     LoginComponent,
     WelcomeComponent,
     ToolbarComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    TodoEditComponent
   ],
   imports: [
     BrowserModule,

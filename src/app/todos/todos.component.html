@@ -1,6 +1,6 @@
-<section class="todos">
+<section fxLayout="column" fxLayoutAlign="center center" *ngIf="!editMode">
   <h1>My ToDos</h1>
-  <form class="todo-form" fxLayout="column" fxLayoutAlign="center center" [formGroup]="todosForm">
+  <form [formGroup]="todosForm">
     <mat-form-field>
       <input matInput type="text" placeholder="Please enter a todo" formControlName="todo">
     </mat-form-field>
@@ -8,9 +8,21 @@
   </form>
     <ul fxLayout="column" fxLayoutAlign="center center">
       <mat-card class="todo-card" *ngFor="let todo of todos">{{ todo.text }}
-        <button mat-icon-button class="delete-button" color="warn" (click)="deleteTodo(todo)"><mat-icon>delete</mat-icon></button>
-        <button mat-icon-button class="edit-button" color="primary"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button class="delete-button" color="warn" (click)="onDeleteTodo(todo)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button class="edit-button" color="primary" (click)="onEditTodo(todo)"><mat-icon>edit</mat-icon></button>
       </mat-card>
     </ul>
+</section>
+<section fxLayout="column" fxLayoutAlign="center center" *ngIf="editMode">
+  <h1>Editing Todo</h1>
+  <form [formGroup]="editTodoForm" (ngSubmit)="onSubmitEditForm()">
+      <mat-form-field>
+        <input matInput type="text" formControlName='text'>
+      </mat-form-field>
+      <div>
+        <button type="submit" mat-raised-button color="primary">Save</button>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+      </div>
+  </form>
 </section>
 

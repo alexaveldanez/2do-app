@@ -1,0 +1,10 @@
+<section>
+  <h1>Editing Todo</h1>
+  <form class="todo-form" fxLayout="column" fxLayoutAlign="center center" [formGroup]="editTodoForm">
+    <mat-form-field>
+      <input matInput type="text" formControlName="todo">
+    </mat-form-field>
+    <button mat-raised-button color="primary">Save</button>
+    <button mat-raised-button color="primary">Cancel</button>
+  </form>
+</section>

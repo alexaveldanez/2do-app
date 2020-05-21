@@ -1,11 +1,27 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+
 import { Todo } from './todo.model';
-import { isNgTemplate } from '@angular/compiler';
+
+
 
 @Injectable()
 export class TodoService {
-  todos: Todo[] = [];
+  private todos: Todo[] = [];
 
+  todosChanged = new Subject<Todo[]>();
+
+  setTodos(todos: Todo[]) {
+    this.todos = todos;
+  }
+
+  getTodos() {
+    return this.todos.slice();
+  }
+
+  getTodo(index: number) {
+    return this.todos[index];
+  }
 
   addNewTodo(todoText) {
     if (todoText !== '') {
@@ -15,15 +31,18 @@ export class TodoService {
         complete: false,
         date: new Date()
       });
+      this.todosChanged.next(this.todos.slice());
     }
   }
 
-  updateTodo() {
-
+  updateTodo(index: number, newTodo: Todo) {
+    this.todos[index] = newTodo;
+    this.todosChanged.next(this.todos.slice());
   }
 
-  deleteTodo() {
-
+  deleteTodo(index: number) {
+    this.todos.splice(index, 1);
+    this.todosChanged.next(this.todos.slice());
   }
 
 }
