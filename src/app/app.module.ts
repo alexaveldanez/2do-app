@@ -19,6 +19,7 @@ import { AuthService } from './auth/auth.service';
 import { TodoService } from './todos/todo.service';
 import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
 import { TodosCompletedComponent } from './todos/todos-completed/todos-completed.component';
+import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incomplete.component';
 
 
 
@@ -32,7 +33,8 @@ import { TodosCompletedComponent } from './todos/todos-completed/todos-completed
     ToolbarComponent,
     SidenavListComponent,
     TodoEditComponent,
-    TodosCompletedComponent
+    TodosCompletedComponent,
+    TodosIncompleteComponent
   ],
   imports: [
     BrowserModule,

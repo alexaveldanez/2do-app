@@ -1,33 +1,6 @@
 <mat-tab-group>
   <mat-tab label="Incomplete ToDos">
-    <section fxLayout="column" fxLayoutAlign="center center" *ngIf="!editMode">
-      <h1>My ToDos</h1>
-      <form [formGroup]="todosForm" (ngSubmit)="onAddTodo(todosForm.value.todo)">
-        <mat-form-field>
-          <input matInput type="text" placeholder="Please enter a todo" formControlName="todo">
-        </mat-form-field>
-        <button type="submit" mat-raised-button color="primary">Add</button>
-      </form>
-        <ul fxLayout="column" fxLayoutAlign="center center">
-          <mat-card class="todo-card" *ngFor="let todo of todos"><mat-checkbox (click)="onCheck(todo)">{{ todo.text }}</mat-checkbox>
-            <button mat-icon-button class="delete-button" color="warn" (click)="onDeleteTodo(todo)"><mat-icon>delete</mat-icon></button>
-            <button mat-icon-button class="edit-button" color="primary" (click)="onEditTodo(todo)"><mat-icon>edit</mat-icon></button>
-          </mat-card>
-        </ul>
-    </section>
-    <section fxLayout="column" fxLayoutAlign="center center" *ngIf="editMode">
-      <h1>Editing Todo</h1>
-      <form [formGroup]="editTodoForm" (ngSubmit)="onSubmitEditForm()">
-          <mat-form-field>
-            <input matInput type="text" formControlName='text'>
-          </mat-form-field>
-          <div>
-            <button type="submit" mat-raised-button color="primary">Save</button>
-            <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-          </div>
-      </form>
-    </section>
-
+    <app-todos-incomplete></app-todos-incomplete>
   </mat-tab>
   <mat-tab label="Completed ToDos">
     <app-todos-completed></app-todos-completed>
