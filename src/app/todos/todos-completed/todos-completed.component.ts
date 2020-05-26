@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 import { Todo } from '../todo.model';
 import { TodoService } from '../todo.service';
+
 
 
 @Component({
@@ -11,10 +13,11 @@ import { TodoService } from '../todo.service';
   templateUrl: './todos-completed.component.html',
   styleUrls: ['./todos-completed.component.css']
 })
-export class TodosCompletedComponent implements OnInit, OnDestroy {
+export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['date', 'ToDo'];
   dataSource = new MatTableDataSource<Todo>();
   private completedTodosSub: Subscription;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(private todoService: TodoService) { }
 
@@ -25,6 +28,10 @@ export class TodosCompletedComponent implements OnInit, OnDestroy {
       }
     );
     this.todoService.getCompletedTodos();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy() {
