@@ -8,8 +8,10 @@ import { Todo } from './todo.model';
 @Injectable()
 export class TodoService {
   private todos: Todo[] = [];
+  private completedTodos: Todo[] = [];
 
   todosChanged = new Subject<Todo[]>();
+  completedTodosChanged = new Subject<Todo[]>();
 
   setTodos(todos: Todo[]) {
     this.todos = todos;
@@ -17,6 +19,10 @@ export class TodoService {
 
   getTodos() {
     return this.todos.slice();
+  }
+
+  getCompletedTodos() {
+    this.completedTodosChanged.next(this.completedTodos.slice());
   }
 
   getTodo(index: number) {
@@ -45,4 +51,13 @@ export class TodoService {
     this.todosChanged.next(this.todos.slice());
   }
 
+  completedTodo(todo: Todo) {
+    todo.complete = true;
+    const completedTodo = todo;
+    this.completedTodos.push(completedTodo);
+    const completedTodoId = this.todos.indexOf(todo);
+    this.todos.splice(completedTodoId, 1);
+    this.todosChanged.next(this.todos.slice());
+    this.completedTodosChanged.next(this.completedTodos.slice());
+  }
 }

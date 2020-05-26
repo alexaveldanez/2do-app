@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { TodoService } from './todo.service';
 import { Todo } from './todo.model';
@@ -41,9 +42,17 @@ export class TodosComponent implements OnInit, OnDestroy {
     this.todos = this.todoService.getTodos();
   }
 
+  onCheck(todo: Todo) {
+    this.todoService.completedTodo(todo);
+  }
+
   onAddTodo(todoText) {
-    this.todoService.addNewTodo(todoText);
-    this.todosForm.reset();
+    if (todoText !== '') {
+      this.todoService.addNewTodo(todoText);
+      this.todosForm.reset();
+    } else {
+      alert('Please enter a to do first!');
+    }
   }
 
   onDeleteTodo(todo) {
@@ -57,7 +66,6 @@ export class TodosComponent implements OnInit, OnDestroy {
     const complete = todo.complete;
     const date = todo.date;
     this.todoIndex = this.todos.indexOf(todo);
-    console.log(this.todos);
     this.editTodoForm = new FormGroup({
       id: new FormControl(id),
       text: new FormControl(editedTodoText, Validators.required),
@@ -69,25 +77,11 @@ export class TodosComponent implements OnInit, OnDestroy {
   onSubmitEditForm() {
     this.todoService.updateTodo(this.todoIndex, this.editTodoForm.value);
     this.editMode = false;
-    console.log(this.todos);
   }
 
   onCancel() {
     this.editMode = false;
   }
-
-  // private initForm() {
-  //   let todoText = '';
-
-  //   if (this.editMode) {
-  //     const todo = this.todoService.getTodo(this.id);
-  //     todoText = todo.text;
-  //   }
-  //   this.todosForm = new FormGroup({
-  //     todo: new FormControl(todoText, Validators.required)
-  //   });
-
-  //   }
 
     ngOnDestroy() {
       this.todosSubscription.unsubscribe();

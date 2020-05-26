@@ -18,6 +18,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { AuthService } from './auth/auth.service';
 import { TodoService } from './todos/todo.service';
 import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
+import { TodosCompletedComponent } from './todos/todos-completed/todos-completed.component';
 
 
 
@@ -30,7 +31,8 @@ import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
     WelcomeComponent,
     ToolbarComponent,
     SidenavListComponent,
-    TodoEditComponent
+    TodoEditComponent,
+    TodosCompletedComponent
   ],
   imports: [
     BrowserModule,

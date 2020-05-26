@@ -8,6 +8,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -18,7 +21,10 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatTableModule
   ],
   exports: [
     MatFormFieldModule,
@@ -28,7 +34,10 @@ import { MatCardModule } from '@angular/material/card';
     MatListModule,
     MatIconModule,
     MatToolbarModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule,
+    MatTabsModule,
+    MatTableModule
   ]
 })
 export class MaterialModule {}
