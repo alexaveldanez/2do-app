@@ -2,9 +2,11 @@ import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular
 import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 import { Todo } from '../todo.model';
 import { TodoService } from '../todo.service';
+
 
 
 
@@ -18,6 +20,7 @@ export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit
   dataSource = new MatTableDataSource<Todo>();
   private completedTodosSub: Subscription;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private todoService: TodoService) { }
 
@@ -32,6 +35,7 @@ export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   filter(filterValue: string) {
