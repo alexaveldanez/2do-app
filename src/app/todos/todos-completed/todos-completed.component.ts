@@ -34,6 +34,10 @@ export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit
     this.dataSource.sort = this.sort;
   }
 
+  filter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   ngOnDestroy() {
     if (this.completedTodosSub) {
       this.completedTodosSub.unsubscribe();
