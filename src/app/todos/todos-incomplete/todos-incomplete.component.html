@@ -1,8 +1,8 @@
 <section fxLayout="column" fxLayoutAlign="center center" *ngIf="!editMode">
-  <h1>My ToDo List</h1>
+  <h1>My To Do List</h1>
   <form [formGroup]="todosForm" (ngSubmit)="onAddTodo(todosForm.value.todo)">
     <mat-form-field>
-      <input matInput type="text" placeholder="Please enter a todo" formControlName="todo">
+      <input matInput type="text" placeholder="Add something to do" formControlName="todo">
     </mat-form-field>
     <button type="submit" mat-raised-button color="primary"><mat-icon>add</mat-icon></button>
   </form>

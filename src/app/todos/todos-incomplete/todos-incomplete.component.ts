@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 
+import { Subscription } from 'rxjs';
 import { Todo } from '../todo.model';
 import { TodoService } from '../todo.service';
+import { DataStorageService } from 'src/app/data-storage.service';
 
 
 @Component({
@@ -24,11 +24,11 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
 
   constructor(
     private todoService: TodoService,
-    private router: Router,
-    private route: ActivatedRoute
+    private dataStorageService: DataStorageService
     ) {}
 
   ngOnInit() {
+    this.dataStorageService.fetchTodos();
     this.todosSubscription = this.todoService.todosChanged
     .subscribe(
       (todos: Todo[]) => {
@@ -52,7 +52,9 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
     } else {
       alert('Please enter a to do first!');
     }
+    this.dataStorageService.storeTodos();
     this.nothingTodo = false;
+    // this.dataStorageService.fetchTodos();
   }
 
   onDeleteTodo(todo) {
@@ -61,6 +63,7 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
       this.nothingTodo = true;
     }
   }
+
 
   onEditTodo(todo: Todo) {
     this.editMode = true;

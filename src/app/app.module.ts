@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { TodoService } from './todos/todo.service';
 import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
 import { TodosCompletedComponent } from './todos/todos-completed/todos-completed.component';
 import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incomplete.component';
+import { UIService } from './ui.service';
 
 
 
@@ -43,9 +45,10 @@ import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incompl
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
-  providers: [AuthService, TodoService],
+  providers: [AuthService, TodoService, UIService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -4,12 +4,12 @@
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-    <div><a routerLink="/">NG ToDo App</a></div>
+    <div><a routerLink="/">NG To Do App</a></div>
     <div fxFlex fxFlexLayout fxLayoutAlign="flex-end" fxHide.xs>
       <ul fxLayout fxLayoutGap="10px" class="navigation-items">
         <li *ngIf="!isAuth"><a routerLink="/signup">Signup</a></li>
         <li *ngIf="!isAuth"><a routerLink="/login">Login</a></li>
-        <li *ngIf="isAuth"><a routerLink="/todos">ToDos</a></li>
+        <li *ngIf="isAuth"><a routerLink="/todos">To Dos</a></li>
         <li *ngIf="isAuth"><a (click)="onLogout()">Logout</a></li>
       </ul>
     </div>

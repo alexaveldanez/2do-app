@@ -15,6 +15,7 @@ export class TodoService {
 
   setTodos(todos: Todo[]) {
     this.todos = todos;
+    this.todosChanged.next(this.todos.slice());
   }
 
   getTodos() {
