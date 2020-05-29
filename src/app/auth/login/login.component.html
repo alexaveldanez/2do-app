@@ -1,11 +1,15 @@
 <section>
     <h2>Login to your account</h2>
+    <div fxLayout="column" fxLayoutAlign="center center" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
     <form
     fxLayout="column"
     fxLayoutAlign="center center"
     fxLayoutGap="10px"
     [formGroup]="loginForm"
-    (ngSubmit)="onLogin(loginForm)">
+    (ngSubmit)="onLogin(loginForm)"
+    *ngIf="!isLoading">
     <mat-form-field>
       <input
       matInput

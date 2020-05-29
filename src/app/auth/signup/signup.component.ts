@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { AuthService } from '../auth.service';
 import { UIService } from '../../ui.service';
@@ -13,7 +14,7 @@ export class SignupComponent implements OnInit {
   signupForm: FormGroup;
   isLoading = false;
 
-  constructor(private authService: AuthService, private uiService: UIService ) { }
+  constructor(private authService: AuthService, private uiService: UIService, private router: Router ) { }
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
@@ -30,9 +31,10 @@ export class SignupComponent implements OnInit {
     const password = form.value.email;
 
     this.isLoading = true;
-    this.authService.signupUser(email, password).subscribe(resData => {
+    this.authService.signup(email, password).subscribe(resData => {
       console.log(resData);
       this.isLoading = false;
+      this.authService.authSuccess();
     }, errorMessage => {
       this.uiService.showSnackBar(errorMessage, null, 5000);
       this.isLoading = false;

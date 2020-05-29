@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -22,6 +22,7 @@ import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
 import { TodosCompletedComponent } from './todos/todos-completed/todos-completed.component';
 import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incomplete.component';
 import { UIService } from './ui.service';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 
 
@@ -48,7 +49,16 @@ import { UIService } from './ui.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [AuthService, TodoService, UIService],
+  providers: [
+    AuthService,
+    TodoService,
+    UIService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
