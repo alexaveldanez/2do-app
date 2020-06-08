@@ -25,12 +25,13 @@ export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
-    this.completedTodosSub = this.todoService.completedTodosChanged.subscribe(
+    // this.completedTodosSub = this.todoService.getCompletedTodos().subscribe(completedTodos => (this.completedTodos = completedTodos));
+    // console.log(this.completedTodos);
+    this.completedTodosSub = this.todoService.getCompletedTodos().subscribe(
       (completedTodos: Todo[]) => {
         this.dataSource.data = completedTodos;
       }
     );
-    this.todoService.getCompletedTodos();
   }
 
   ngAfterViewInit() {

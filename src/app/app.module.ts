@@ -4,6 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 
 import { AppComponent } from './app.component';
@@ -23,6 +26,8 @@ import { TodosCompletedComponent } from './todos/todos-completed/todos-completed
 import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incomplete.component';
 import { UIService } from './ui.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { environment } from 'src/environments/environment';
+import { GoogleSigninDirective } from './auth/google-signin.directive';
 
 
 
@@ -37,7 +42,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     SidenavListComponent,
     TodoEditComponent,
     TodosCompletedComponent,
-    TodosIncompleteComponent
+    TodosIncompleteComponent,
+    GoogleSigninDirective
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,10 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     MaterialModule,
     FlexLayoutModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [
     AuthService,

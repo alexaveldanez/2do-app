@@ -4,19 +4,25 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 import { User } from './user.model';
+import { UserData } from './user-data';
 import { AuthData } from './auth-data.model';
 import { AuthResponseData } from './auth-response-data.model';
 
 
+
+
+
 @Injectable()
 export class AuthService {
-  authChange = new Subject<boolean>();
+  // authChange = new Subject<boolean>();
   user  = new BehaviorSubject<User>(null);
+  private tokenExpirationTimer: any;
   // private user: User;
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient, private afAuth: AngularFireAuth ) {}
 
   signup(email: string, password: string) {
     return this.http.post<AuthResponseData>(
@@ -54,15 +60,32 @@ export class AuthService {
       }));
   }
 
-  // login(authData: AuthData) {
-  //   this.user = {
-  //     email: authData.email,
-  //     userId: Math.round(Math.random() * 10000).toString()
-  //   };
-  //   this.authSuccess();
-  // }
+  autoLogin() {
+    const userData: UserData = JSON.parse(localStorage.getItem('userData'));
+    if (!userData) {
+      return;
+    }
 
-  private hadleAuthentication(email: string, userId: string, token: string, expiresIn: number) {
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      userData._token,
+      new Date(userData._tokenExpirationDate)
+      );
+
+    if (loadedUser.token) {
+       this.user.next(loadedUser);
+       const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+       this.autoLogout(expirationDuration);
+      }
+  }
+
+  private hadleAuthentication(
+    email: string,
+    userId: string,
+    token: string,
+    expiresIn: number
+    ) {
     const expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const user = new User(
       email,
@@ -71,6 +94,8 @@ export class AuthService {
       expirationDate
       );
     this.user.next(user);
+    this.autoLogout(expiresIn * 1000);
+    localStorage.setItem('userData', JSON.stringify(user));
   }
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -94,20 +119,29 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
-    this.authChange.next(false);
     this.router.navigate(['/login']);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+    }
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   getUser() {
     return { ...this.user };
   }
 
-  isAuth() {
-    return this.user != null;
+  async isAuth() {
+    const user = await this.afAuth.currentUser;
+    const isLoggedIn = !!user;
+    return isLoggedIn;
   }
 
-  authSuccess() {
-    this.authChange.next(true);
-    this.router.navigate(['/todos']);
-  }
+
 }

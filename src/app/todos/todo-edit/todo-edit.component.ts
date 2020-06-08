@@ -14,17 +14,17 @@ export class TodoEditComponent implements OnInit {
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
-    this.editForm();
+    // this.editForm();
   }
 
-  private editForm() {
-    let todoText: string;
-    const todo = this.todoService.getTodo(this.id);
-    todoText = todo.text;
+  // private editForm() {
+  //   let todoText: string;
+  //   const todo = this.todoService.getTodo(this.id);
+  //   todoText = todo.text;
 
-    this.editTodoForm = new FormGroup({
-      todo: new FormControl(todoText, Validators.required)
-    });
-    }
+  //   this.editTodoForm = new FormGroup({
+  //     todo: new FormControl(todoText, Validators.required)
+  //   });
+  //   }
 
 }

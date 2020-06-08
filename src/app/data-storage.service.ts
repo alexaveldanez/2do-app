@@ -9,28 +9,29 @@ import { AuthService } from './auth/auth.service';
 
 @Injectable({providedIn: 'root'})
 export class DataStorageService {
-  constructor(
-    private http: HttpClient,
-    private todoService: TodoService,
-    private authService: AuthService
-    ) {}
+  // constructor(
+  //   private http: HttpClient,
+  //   private todoService: TodoService,
+  //   private authService: AuthService
+  //   ) {}
 
-  storeTodos() {
-    const todos = this.todoService.getTodos();
-    this.http.put('https://ng-todo-app-85e59.firebaseio.com/todos.json', todos)
-    .subscribe(response => {
-      console.log(response);
-    });
-  }
+  // storeTodos() {
+  //   const todos = this.todoService.getTodos();
+  //   this.http.put('https://ng-todo-app-85e59.firebaseio.com/todos.json', todos)
+  //   .subscribe(response => {
+  //     // console.log(response);
+  //   });
+  // }
 
-  fetchTodos() {
-        return this.http.get<Todo[]>(
-          'https://ng-todo-app-85e59.firebaseio.com//todos.json?auth='
-        ).pipe(
-          tap(todos => {
-            this.todoService.setTodos(todos);
-          })
-        );
-      }
+  // fetchTodos() {
+  //       return this.http.get<Todo[]>(
+  //         'https://ng-todo-app-85e59.firebaseio.com/todos.json'
+  //       ).pipe(
+  //         tap(todos => {
+  //           // console.log(todos);
+  //           this.todoService.setTodos(todos);
+  //         })
+  //       );
+  //     }
 
 }

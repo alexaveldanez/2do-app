@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
-import { AuthService } from '../auth.service';
 import { UIService } from 'src/app/ui.service';
 import { AuthResponseData } from '../auth-response-data.model';
 
@@ -10,13 +10,19 @@ import { AuthResponseData } from '../auth-response-data.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isLoading = false;
+  isPasswordReset = false;
+  serverMessage: string;
 
-  constructor(private authService: AuthService, private uiService: UIService, private router: Router) { }
+  constructor(
+    private uiService: UIService,
+    private router: Router,
+    public afAuth: AngularFireAuth
+    ) { }
 
   ngOnInit() {
     this.loginForm = new FormGroup({
@@ -25,22 +31,47 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onLogin(form: FormGroup) {
+  async onSubmit(form: FormGroup) {
     if (!form) {
       return;
     }
-    const email = form.value.email;
-    const password = form.value.email;
-
     this.isLoading = true;
-    this.authService.login(email, password).subscribe(resData => {
-      console.log(resData);
-      this.isLoading = false;
-      this.authService.authSuccess();
-    }, errorMessage => {
-      this.uiService.showSnackBar(errorMessage, null, 5000);
-      this.isLoading = false;
-    });
+    const email = this.email.value;
+    const password = this.password.value;
+
+    try {
+      await this.afAuth.signInWithEmailAndPassword(email, password);
+      this.router.navigate(['/todos']);
+    } catch (err) {
+      this.serverMessage = err;
+    }
     form.reset();
+    this.isLoading = false;
   }
+
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
+  }
+
+  async resetPassword() {
+    // this.afAuth.sendPasswordResetEmail(this.email.value);
+  }
+
+  async onGoogleLogin() {
+    await this.afAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.router.navigate(['/todos']);
+      }
+    });
+  }
+
+  onResetPassword() {
+    this.isPasswordReset = true;
+  }
+
 }

@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 
-import { AuthService } from './auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { UIService } from '../ui.service';
+
 
 
 @Injectable()
 export class AuthGaurd implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private router: Router,
+    private snack: UIService
+    ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (this.authService.isAuth()) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
+  async canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
+    const user = await this.afAuth.currentUser;
+    const isLoggedIn = !!user;
+    if (!isLoggedIn) {
+      this.snack.authError();
     }
+    return isLoggedIn;
   }
 }

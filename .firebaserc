@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fitness-tracker-3b647": {
+      "hosting": {
+        "todo-app": [
+          "fitness-tracker-3b647"
+        ]
+      }
+    }
+  }
+}

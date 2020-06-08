@@ -1,24 +1,24 @@
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
-
-import { AuthService } from 'src/app/auth/auth.service';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav-list',
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.css']
 })
-export class SidenavListComponent implements OnInit, OnDestroy {
+export class SidenavListComponent implements OnInit {
   @Output() closeSidenav = new EventEmitter<void>();
-  isAuth: boolean;
-  authSubscription: Subscription;
+  isAuth = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router ) { }
 
   ngOnInit(): void {
-    this.authSubscription = this.authService.authChange.subscribe(authStatus => {
-      this.isAuth = authStatus;
-    })
+    this.afAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.isAuth = true;
+      }
+    });
   }
 
   onClose() {
@@ -27,11 +27,8 @@ export class SidenavListComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.onClose();
-    this.authService.logout();
+    this.afAuth.signOut();
+    this.router.navigate(['/login']);
+    this.isAuth = false;
   }
-
-  ngOnDestroy() {
-    this.authSubscription.unsubscribe();
-  }
-
 }

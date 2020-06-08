@@ -1,7 +1,10 @@
-import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/auth/auth.service';
+import { AngularFireAuth } from '@angular/fire/auth';
+
 
 
 
@@ -10,16 +13,18 @@ import { AuthService } from 'src/app/auth/auth.service';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.css']
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
-  isAuth: boolean;
-  authSubscription: Subscription;
+  isAuth = false;
+  userSubscription: Subscription;
 
-  constructor(private authService: AuthService) { }
+  constructor(private afAuth: AngularFireAuth, private router: Router ) { }
 
   ngOnInit(): void {
-    this.authSubscription = this.authService.authChange.subscribe(authStatus => {
-      this.isAuth = authStatus;
+    this.afAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.isAuth = true;
+      }
     });
   }
 
@@ -28,11 +33,8 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.afAuth.signOut();
+    this.router.navigate(['/login']);
+    this.isAuth = false;
   }
-
-  ngOnDestroy() {
-    this.authSubscription.unsubscribe();
-  }
-
 }
