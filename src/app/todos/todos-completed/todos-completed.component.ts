@@ -13,7 +13,7 @@ import { TodoService } from '../todo.service';
 @Component({
   selector: 'app-todos-completed',
   templateUrl: './todos-completed.component.html',
-  styleUrls: ['./todos-completed.component.css']
+  styleUrls: ['./todos-completed.component.scss']
 })
 export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit {
   displayedColumns = ['date', 'ToDo'];
@@ -25,8 +25,6 @@ export class TodosCompletedComponent implements OnInit, OnDestroy, AfterViewInit
   constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
-    // this.completedTodosSub = this.todoService.getCompletedTodos().subscribe(completedTodos => (this.completedTodos = completedTodos));
-    // console.log(this.completedTodos);
     this.completedTodosSub = this.todoService.getCompletedTodos().subscribe(
       (completedTodos: Todo[]) => {
         this.dataSource.data = completedTodos;

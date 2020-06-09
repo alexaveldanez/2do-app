@@ -16,13 +16,16 @@
 </section>
 <section fxLayout="column" fxLayoutAlign="center center" *ngIf="editMode">
   <h1>Editing Todo</h1>
-  <form [formGroup]="editTodoForm" (ngSubmit)="onSubmitEditForm()">
+  <mat-card>
+    <form [formGroup]="editTodoForm" (ngSubmit)="onSubmitEditForm()">
       <mat-form-field>
         <input matInput type="text" formControlName='text'>
       </mat-form-field>
       <div>
         <button type="submit" mat-raised-button color="primary">Save</button>
+        <div class="divider"></div>
         <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
       </div>
   </form>
+  </mat-card>
 </section>

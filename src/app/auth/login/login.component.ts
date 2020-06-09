@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
+// import * as firebase from 'firebase/app';
 
 import { UIService } from 'src/app/ui.service';
-import { AuthResponseData } from '../auth-response-data.model';
 
 
 @Component({
@@ -14,6 +14,7 @@ import { AuthResponseData } from '../auth-response-data.model';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  resetPasswordForm: FormGroup;
   isLoading = false;
   isPasswordReset = false;
   serverMessage: string;
@@ -58,20 +59,33 @@ export class LoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  async resetPassword() {
-    // this.afAuth.sendPasswordResetEmail(this.email.value);
-  }
-
-  async onGoogleLogin() {
-    await this.afAuth.onAuthStateChanged(user => {
-      if (user) {
-        this.router.navigate(['/todos']);
-      }
+  onResetPassword() {
+    this.isPasswordReset = true;
+    this.resetPasswordForm =  new FormGroup({
+      email: new FormControl('', {validators: [Validators.required]})
     });
   }
 
-  onResetPassword() {
-    this.isPasswordReset = true;
+  goBack() {
+    this.isPasswordReset =  false;
+  }
+
+  async onSubmitResetForm(form: FormGroup) {
+    if (!form) {
+      return;
+    }
+    this.isLoading = true;
+    const email = form.value.email;
+    console.log(email);
+
+    try {
+      await this.afAuth.sendPasswordResetEmail(email);
+      this.serverMessage = 'Check your email for password reset';
+    } catch (err) {
+      this.serverMessage = err;
+    }
+    form.reset();
+    this.isLoading = false;
   }
 
 }

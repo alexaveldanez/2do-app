@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+
+html, body {
+  font-family: 'Roboto, sans-serif';
+  height: 100%;
+}
+body {
+   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+@include mat-core();
+
+$ngTodo-app-primary: mat-palette($mat-light-blue);
+$ngTodo-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+$ngTodo-app-warn:    mat-palette($mat-red);
+
+$ngTodo-app-theme: mat-dark-theme($ngTodo-app-primary, $ngTodo-app-accent, $ngTodo-app-warn);
+
+@include angular-material-theme($ngTodo-app-theme);

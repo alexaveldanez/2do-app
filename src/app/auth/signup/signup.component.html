@@ -1,62 +1,61 @@
-<section class="signup">
   <h2>Create a new account</h2>
-  <h3>Manage all your things to do!</h3>
 
-  <div *ngIf="isLoading">
+  <div *ngIf="isLoading" fxLayout="column" fxLayoutAlign="center center">
     <mat-spinner></mat-spinner>
   </div>
 
-  <div>
+  <div *ngIf="!isLoading">
     <button class="google-button" mat-raised-button appGoogleSignin>
       <img src="/assets/images/google-logo.svg"> Signup with Google
     </button>
   </div>
 
-  <h4>OR</h4>
-  <h4>Signup with your Email</h4>
+  <h4 *ngIf="!isLoading" >OR</h4>
+  <mat-card *ngIf="!isLoading" >
+    <h4>Signup with your Email</h4>
 
-  <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)" *ngIf="!isLoading">
+    <form fxLayout="column" fxLayoutAlign="center center" [formGroup]="signupForm" (ngSubmit)="onSubmit(signupForm)" *ngIf="!isLoading">
 
-    <mat-form-field [color]="email.valid && 'accent'">
-      <input
-      type="email"
-      matInput
-      placeholder="Your email"
-      formControlName="email"
-      autoComplete="off">
-      <mat-hint>Please enter your email</mat-hint>
-      <mat-error *ngIf="email.invalid && email.dirty">Email is missing or invalid!</mat-error>
-    </mat-form-field>
+      <mat-form-field [color]="email.valid && 'accent'">
+        <input
+        type="email"
+        matInput
+        placeholder="Your email"
+        formControlName="email"
+        autoComplete="off">
+        <mat-hint>Please enter your email</mat-hint>
+        <mat-error *ngIf="email.invalid && email.dirty">Email is missing or invalid!</mat-error>
+      </mat-form-field>
 
-    <mat-form-field [color]="email.valid && 'accent'">
-    <input
-    type="password"
-    matInput
-    placeholder="Your password"
-    formControlName="password"
-    autocomplete="off">
-    <mat-hint>Please enter your password</mat-hint>
-    <mat-error *ngIf="password.invalid && password.dirty">
-      Password must be at least 6 characters long
-    </mat-error>
-    </mat-form-field>
-
-    <mat-form-field [color]="passwordDoesMatch ? 'accent' : 'warn'">
+      <mat-form-field [color]="email.valid && 'accent'">
       <input
       type="password"
       matInput
-      placeholder="Confirm your password"
-      formControlName="passwordConfirm"
+      placeholder="Your password"
+      formControlName="password"
       autocomplete="off">
-      <mat-hint>Please confirm your password</mat-hint>
-      <mat-error *ngIf="passwordConfirm.dirty && !passwordDoesMatch">
-        Password does not match
+      <mat-hint>Please enter your password</mat-hint>
+      <mat-error *ngIf="password.invalid && password.dirty">
+        Password must be at least 6 characters long
       </mat-error>
       </mat-form-field>
 
-      <mat-error class="server-error">{{ serverMessage }}</mat-error>
+      <mat-form-field [color]="passwordDoesMatch ? 'accent' : 'warn'">
+        <input
+        type="password"
+        matInput
+        placeholder="Confirm your password"
+        formControlName="passwordConfirm"
+        autocomplete="off">
+        <mat-hint>Please confirm your password</mat-hint>
+        <mat-error *ngIf="passwordConfirm.dirty && !passwordDoesMatch">
+          Password does not match
+        </mat-error>
+        </mat-form-field>
 
-    <button mat-raised-button color='primary' type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+        <mat-error class="server-error">{{ serverMessage }}</mat-error>
 
-  </form>
-</section>
+      <button mat-raised-button color='primary' type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+
+    </form>
+  </mat-card>

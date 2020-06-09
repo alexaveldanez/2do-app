@@ -3,10 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 
-import { AuthService } from '../auth.service';
-import { UIService } from '../../ui.service';
-
-
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -18,8 +14,6 @@ export class SignupComponent implements OnInit {
   serverMessage: string;
 
   constructor(
-    private authService: AuthService,
-    private uiService: UIService,
     private router: Router,
     public afAuth: AngularFireAuth
     ) { }

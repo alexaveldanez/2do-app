@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -19,13 +17,10 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToolbarComponent } from './navigation/toolbar/toolbar.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { AuthService } from './auth/auth.service';
 import { TodoService } from './todos/todo.service';
-import { TodoEditComponent } from './todos/todo-edit/todo-edit.component';
 import { TodosCompletedComponent } from './todos/todos-completed/todos-completed.component';
 import { TodosIncompleteComponent } from './todos/todos-incomplete/todos-incomplete.component';
 import { UIService } from './ui.service';
-import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { environment } from 'src/environments/environment';
 import { GoogleSigninDirective } from './auth/google-signin.directive';
 
@@ -40,7 +35,6 @@ import { GoogleSigninDirective } from './auth/google-signin.directive';
     WelcomeComponent,
     ToolbarComponent,
     SidenavListComponent,
-    TodoEditComponent,
     TodosCompletedComponent,
     TodosIncompleteComponent,
     GoogleSigninDirective
@@ -52,21 +46,13 @@ import { GoogleSigninDirective } from './auth/google-signin.directive';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    FormsModule,
-    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule
   ],
   providers: [
-    AuthService,
     TodoService,
-    UIService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptorService,
-      multi: true
-    }
+    UIService
   ],
   bootstrap: [AppComponent]
 })

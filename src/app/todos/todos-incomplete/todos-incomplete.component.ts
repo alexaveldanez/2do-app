@@ -4,13 +4,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Todo } from '../todo.model';
 import { TodoService } from '../todo.service';
-import { DataStorageService } from 'src/app/data-storage.service';
-
 
 @Component({
   selector: 'app-todos-incomplete',
   templateUrl: './todos-incomplete.component.html',
-  styleUrls: ['./todos-incomplete.component.css']
+  styleUrls: ['./todos-incomplete.component.scss']
 })
 export class TodosIncompleteComponent implements OnInit, OnDestroy {
   todos: Todo[];
@@ -22,9 +20,7 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
   todoId: string;
 
 
-  constructor(
-    private todoService: TodoService
-    ) {}
+  constructor(private todoService: TodoService) {}
 
     ngOnInit() {
       this.todosSubscription = this.todoService.getUserTodos().subscribe((todos) => {
@@ -37,11 +33,15 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
     }
 
     onAddTodo(todoText: string) {
-      this.todoService.addNewTodo({
-        text: todoText,
-        complete: false,
-        date: new Date(),
-      });
+      if (todoText !== '') {
+        this.todoService.addNewTodo({
+          text: todoText,
+          complete: false,
+          date: new Date(),
+        });
+      } else {
+        alert('Please enter something to do first!');
+      }
       this.todosForm.reset();
       this.nothingTodo = false;
     }
@@ -91,72 +91,3 @@ export class TodosIncompleteComponent implements OnInit, OnDestroy {
       this.todosSubscription.unsubscribe();
     }
   }
-
-
-  // ngOnInit() {
-  //   this.dataStorageService.fetchTodos().subscribe();
-  //   this.todosSubscription = this.todoService.todosChanged
-  //   .subscribe(
-  //     (todos: Todo[]) => {
-  //       this.todos = todos;
-  //     }
-  //   );
-  //   this.todosForm = new FormGroup({
-  //     todo: new FormControl('', Validators.required)
-  //   });
-  //   this.todos = this.todoService.getTodos();
-  //   if (this.todos) {
-  //     this.nothingTodo = false;
-  //     console.log(this.nothingTodo);
-  //   }
-  // }
-
-  // onCheck(todo: Todo) {
-  //   this.todoService.completedTodo(todo);
-  // }
-
-  // onAddTodo(todoText) {
-  //   if (todoText !== '') {
-  //     this.todoService.addNewTodo(todoText);
-  //     this.todosForm.reset();
-  //   } else {
-  //     alert('Please enter a to do first!');
-  //   }
-  //   this.dataStorageService.storeTodos();
-  //   this.nothingTodo = false;
-  //   // this.dataStorageService.fetchTodos();
-  // }
-
-  // onDeleteTodo(todo) {
-  //   this.todoService.deleteTodo(todo);
-  //   if (this.todos.length === 0) {
-  //     this.nothingTodo = true;
-  //   }
-  //   this.dataStorageService.storeTodos();
-  // }
-
-
-  // onEditTodo(todo: Todo) {
-  //   this.editMode = true;
-  //   const id = todo.id;
-  //   const editedTodoText = todo.text;
-  //   const complete = todo.complete;
-  //   const date = todo.date;
-  //   this.todoIndex = this.todos.indexOf(todo);
-  //   this.editTodoForm = new FormGroup({
-  //     id: new FormControl(id),
-  //     text: new FormControl(editedTodoText, Validators.required),
-  //     complete: new FormControl(complete),
-  //     date: new FormControl(date)
-  //   });
-  // }
-
-  // onSubmitEditForm() {
-  //   this.todoService.updateTodo(this.todoIndex, this.editTodoForm.value);
-  //   this.editMode = false;
-  //   this.dataStorageService.storeTodos();
-  // }
-
-  // onCancel() {
-  //   this.editMode = false;
-  // }

@@ -1,9 +1,9 @@
 {
   "targets": {
-    "fitness-tracker-3b647": {
+    "ng-todo-app-85e59": {
       "hosting": {
         "todo-app": [
-          "fitness-tracker-3b647"
+          "ng-todo-app-85e59"
         ]
       }
     }

@@ -1,18 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-
-import { AuthService } from './auth/auth.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
   title = 'NG To Do App';
-
-  constructor(private authService: AuthService) {}
-
-  ngOnInit() {
-    this.authService.autoLogin();
-  }
 }

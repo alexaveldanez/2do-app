@@ -1,0 +1,34 @@
+:host {
+  text-align: center;
+}
+
+mat-form-field {
+  width: 500px;
+}
+
+mat-card {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+.divider{
+  width: 5px;
+  height: auto;
+  display: inline-block;
+}
+
+.todo-card {
+  width: 500px;
+  margin-bottom: 10px;
+}
+
+.delete-button {
+  float: right
+}
+
+.edit-button {
+  float: right;
+}
