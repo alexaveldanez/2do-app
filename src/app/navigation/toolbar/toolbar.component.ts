@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
@@ -11,7 +10,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class ToolbarComponent implements OnInit {
   @Output() sidenavToggle = new EventEmitter<void>();
   isAuth = false;
-  userSubscription: Subscription;
 
   constructor(private afAuth: AngularFireAuth, private router: Router ) { }
 
